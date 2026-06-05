@@ -32,7 +32,7 @@ export default function Footer() {
               href={github}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub"
+              aria-label="Open Pushkraj Kohok GitHub profile"
               className="text-gray-500 hover:text-white transition-colors"
             >
               <Github className="w-4.5 h-4.5" />
@@ -41,7 +41,7 @@ export default function Footer() {
               href={linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn"
+              aria-label="Open Pushkraj Kohok LinkedIn profile"
               className="text-gray-500 hover:text-white transition-colors"
             >
               <Linkedin className="w-4.5 h-4.5" />

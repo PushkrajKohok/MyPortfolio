@@ -23,7 +23,7 @@ export function normalizeChatMessages(messages: ChatMessage[]) {
 }
 
 export function buildPortfolioContext() {
-  const { personalInfo, education, experience, projects, skills, impactMetrics, languages } =
+  const { personalInfo, roleTargets, education, experience, projects, skills, impactMetrics, languages } =
     portfolioData;
 
   return `
@@ -36,6 +36,7 @@ Personal Information:
 - LinkedIn: ${personalInfo.linkedin}
 - GitHub: ${personalInfo.github}
 - Bio: ${personalInfo.bio}
+- Target Roles: ${roleTargets.join(", ")}
 - Languages: ${languages.join(", ")}
 
 Impact Metrics:
@@ -70,12 +71,21 @@ Projects:
 ${projects
   .map(
     (project) => `- ${project.title}
-  Category: ${project.type}
+  Slug: ${project.slug}
+  Category: ${project.category}
   Description: ${project.description}
+  Long Description: ${project.longDescription}
+  Problem: ${project.problem}
+  Solution: ${project.solution}
   Impact: ${project.impact}
   Metrics: ${project.metrics.join(", ")}
   Tech: ${project.techStack.join(", ")}
-  Workflow: ${project.visualWorkflow.join(" -> ")}`
+  Architecture: ${project.architectureSteps.join(" -> ")}
+  Features: ${project.features.join(", ")}
+  Role: ${project.role}
+  Challenges: ${project.challenges.join(", ")}
+  Outcome: ${project.outcome}
+  Recruiter Takeaway: ${project.recruiterTakeaway}`
   )
   .join("\n")}
 

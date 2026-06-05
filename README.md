@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pushkraj Kohok Portfolio
 
-## Getting Started
+AI/ML and Full-Stack AI Engineer portfolio for Pushkraj Kohok. The site presents recruiter-friendly project case studies, measurable impact metrics, contact actions, and an AI portfolio agent that can answer questions from local portfolio context.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Lucide icons
+- Vercel AI SDK
+- shadcn/ui-ready component conventions
+
+## Local Setup
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). If port 3000 is busy, run:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run dev -- -p 3002
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## AI Agent
 
-## Learn More
+The portfolio agent works without an API key by using local fallback responses built from `data/portfolio.ts` and `lib/portfolio-context.ts`.
 
-To learn more about Next.js, take a look at the following resources:
+For live OpenAI-backed responses, add:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+OPENAI_API_KEY=your_api_key_here
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The app remains usable when the key is missing.
+
+## Required Public Assets
+
+Add these files before production launch:
+
+- `public/Pushkraj_Kohok_Resume.pdf`
+- `public/og-image.png` sized around `1200x630`
+
+The app references these paths for resume links and social previews. Missing files will not break the build, but the resume link or social preview image will return 404 until the assets are added.
+
+## SEO Routes
+
+- `/sitemap.xml` is generated from the homepage, project index, and project case-study slugs.
+- `/robots.txt` allows indexing and points crawlers to the sitemap.
+- Page metadata includes Open Graph and Twitter preview fields.
+
+## Quality Checks
+
+```bash
+npm run lint
+npm run build
+```
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Import the GitHub repository into Vercel.
+2. Set `OPENAI_API_KEY` only if live model responses are desired.
+3. Add the resume PDF and OG image under `public/`.
+4. Keep the production URL aligned with `siteUrl` in `app/layout.tsx`, `app/sitemap.ts`, and `app/robots.ts`.
+5. Deploy with the default Next.js settings.

@@ -1,12 +1,33 @@
 export interface Project {
   id: string;
+  slug: string;
   title: string;
+  category: string;
   type: string;
+  shortDescription: string;
   description: string;
+  longDescription: string;
+  problem: string;
+  solution: string;
   impact: string;
   metrics: string[];
   techStack: string[];
+  architectureSteps: string[];
   visualWorkflow: string[];
+  features: string[];
+  role: string;
+  challenges: string[];
+  outcome: string;
+  recruiterTakeaway: string;
+  links: {
+    github?: string;
+    demo?: string;
+  };
+  visualTheme: {
+    accent: string;
+    gradient: string;
+    glow: string;
+  };
   githubUrl?: string;
   demoUrl?: string;
 }
@@ -60,6 +81,7 @@ export interface PortfolioData {
     linkedin: string;
     github: string;
   };
+  roleTargets: string[];
   heroBadges: string[];
   impactMetrics: Metric[];
   about: {
@@ -86,12 +108,20 @@ export const portfolioData: PortfolioData = {
     linkedin: "https://www.linkedin.com/in/pushkrajkohok/",
     github: "https://github.com/PushkrajKohok",
   },
+  roleTargets: [
+    "AI/ML Engineer",
+    "Full-Stack AI Engineer",
+    "Machine Learning Engineer",
+    "Backend Engineer",
+    "Software Engineer",
+    "AI Product Engineer",
+  ],
   heroBadges: [
     "RAG Systems",
     "Multi-Agent AI",
     "Full-Stack Engineering",
     "Machine Learning",
-    "Cloud + DevOps",
+    "Cloud Automation",
   ],
   impactMetrics: [
     { value: "90%", label: "DA Effort Reduced", icon: "trending-down" },
@@ -119,10 +149,20 @@ export const portfolioData: PortfolioData = {
   projects: [
     {
       id: "teachfusion-ai",
+      slug: "teachfusion-ai",
       title: "TeachFusion AI",
+      category: "RAG + Multi-Agent Teaching Platform",
       type: "RAG & Multi-Agent Teaching Platform",
+      shortDescription:
+        "Grounded course-plan generation from uploaded course materials using RAG and agent orchestration.",
       description:
         "A platform that generates grounded course plans from uploaded course materials, enabling educators to utilize AI constructively and systematically.",
+      longDescription:
+        "TeachFusion AI helps educators convert uploaded course materials into structured, grounded teaching plans. Instead of using AI blindly, instructors can anchor generation in actual course content and use agentic planning to support lesson design.",
+      problem:
+        "Educators often either use AI blindly or spend too much manual time creating lesson plans from course material. The project focuses on helping instructors convert uploaded course content into grounded, structured, useful teaching plans.",
+      solution:
+        "The system uses course-material chunking, retrieval, Gemini APIs, and 3-agent orchestration to generate teaching plans grounded in uploaded materials.",
       impact: "Improved lesson-planning efficiency by 30%.",
       metrics: [
         "30% Planning Efficiency Boost",
@@ -137,21 +177,66 @@ export const portfolioData: PortfolioData = {
         "FastAPI",
         "Next.js",
       ],
+      architectureSteps: [
+        "Upload Material",
+        "Course-Material Chunking",
+        "Retrieval / Vector Search",
+        "Gemini API Processing",
+        "3-Agent Orchestration",
+        "Grounded Teaching Plan",
+      ],
       visualWorkflow: [
         "Upload Material",
         "Chunking & Vector Search",
         "Multi-Agent Planning",
         "Teaching Plan Generation",
       ],
+      features: [
+        "Upload-based course material understanding",
+        "Retrieval-grounded teaching-plan generation",
+        "3-agent orchestration",
+        "Reduced blind AI usage in teaching",
+        "Lesson-planning workflow support",
+      ],
+      role:
+        "Designed the RAG workflow, structured the multi-agent planning loop, and shaped the product flow around educator productivity.",
+      challenges: [
+        "Avoiding generic AI-generated teaching plans",
+        "Grounding outputs in uploaded course material",
+        "Coordinating multiple agents without confusing the user",
+        "Making AI useful for instructors instead of replacing instructor judgment",
+      ],
+      outcome:
+        "The project improved lesson-planning efficiency by 30% and demonstrated how RAG systems can make AI outputs more trustworthy for education workflows.",
+      recruiterTakeaway:
+        "This project demonstrates Pushkraj's ability to build practical RAG and multi-agent AI systems that solve real education workflow problems and improve productivity.",
+      links: {
+        github: "https://github.com/PushkrajKohok",
+      },
+      visualTheme: {
+        accent: "cyan",
+        gradient: "from-accent-cyan via-accent-blue to-accent-violet",
+        glow: "bg-accent-cyan/10",
+      },
       githubUrl: "https://github.com/PushkrajKohok",
-      demoUrl: "#",
+      demoUrl: "/projects/teachfusion-ai",
     },
     {
       id: "medorbit",
+      slug: "medorbit",
       title: "MedOrbit",
+      category: "Healthcare AI + Multi-Agent Clinical Orchestration",
       type: "Healthcare AI & Clinical Orchestration",
+      shortDescription:
+        "Clinical transcript intelligence that turns messy conversations into doctor-reviewable patient communication.",
       description:
         "A clinical AI platform that digests medical consultation transcripts and extracts structured clinical and behavioral insights, securing doctor approval prior to patient delivery.",
+      longDescription:
+        "MedOrbit transforms raw consultation transcripts into structured clinical and behavioral insights while keeping a doctor approval step before patient delivery. The project emphasizes auditable AI workflows for sensitive healthcare communication.",
+      problem:
+        "Clinical conversations contain valuable information, but raw transcripts are messy and cannot be directly shown to patients. The challenge is transforming consultation transcripts into structured insights while keeping doctor approval in the loop.",
+      solution:
+        "The system uses transcript chunking, structured extraction, role-based access, and multi-agent orchestration to convert clinical conversations into doctor-reviewable patient communication.",
       impact:
         "Ensured 100% doctor-approved clinical insights and behavioral analysis before patient delivery.",
       metrics: [
@@ -167,6 +252,14 @@ export const portfolioData: PortfolioData = {
         "PostgreSQL",
         "OpenAI APIs",
       ],
+      architectureSteps: [
+        "Consultation Transcript",
+        "Transcript Chunking",
+        "Clinical Information Extraction",
+        "Behavioral Insight Generation",
+        "Doctor Review / Approval",
+        "Patient Communication",
+      ],
       visualWorkflow: [
         "Consultation Transcript",
         "Clinical Extraction",
@@ -174,15 +267,53 @@ export const portfolioData: PortfolioData = {
         "Doctor Approval Gate",
         "Patient Communication",
       ],
+      features: [
+        "Transcript-to-insight transformation",
+        "Clinical and behavioral insight extraction",
+        "Doctor-approved communication flow",
+        "JWT/RBAC-based access control",
+        "Chunked transcript storage",
+        "Auditable AI workflow",
+      ],
+      role:
+        "Designed the clinical AI workflow, backend orchestration, access-control model, and doctor-review flow for patient-safe output delivery.",
+      challenges: [
+        "Handling long and messy consultation transcripts",
+        "Separating clinical insight from patient-facing communication",
+        "Keeping doctor review before patient delivery",
+        "Designing access control for sensitive workflows",
+      ],
+      outcome:
+        "The project enabled doctor-approved patient communication by converting consultation transcripts into structured clinical and behavioral insights inside an auditable workflow.",
+      recruiterTakeaway:
+        "This project demonstrates Pushkraj's ability to design AI-assisted healthcare workflows with full-stack engineering, backend architecture, access control, and human-in-the-loop review.",
+      links: {
+        github: "https://github.com/PushkrajKohok",
+      },
+      visualTheme: {
+        accent: "violet",
+        gradient: "from-accent-violet via-accent-blue to-accent-cyan",
+        glow: "bg-accent-violet/10",
+      },
       githubUrl: "https://github.com/PushkrajKohok",
-      demoUrl: "#",
+      demoUrl: "/projects/medorbit",
     },
     {
       id: "codebleed",
+      slug: "codebleed",
       title: "CodeBleed",
+      category: "AI Security + Graph-Based Repository Threat Intelligence",
       type: "Graph-Based Threat Intelligence Platform",
+      shortDescription:
+        "Explainable repository risk intelligence using graph mapping, security signals, and attack-path visualization.",
       description:
         "An AI-powered cybersecurity intelligence engine that ingests repository structures and visualizes vulnerabilities as explainable, graph-driven attack paths.",
+      longDescription:
+        "CodeBleed converts repository data into explainable graph-based threat intelligence. It helps developers and security reviewers understand hidden risks across secrets, dependencies, endpoints, and attack paths.",
+      problem:
+        "Repositories can hide security risks across files, dependencies, endpoints, and secrets. Manual inspection is scattered and slow, making it difficult to understand repository risk as an interconnected system.",
+      solution:
+        "The system ingests repository data from GitHub, extracts security-relevant signals, stores relationships in Neo4j, and visualizes attack paths using graph-based intelligence.",
       impact:
         "Surfaced and mapped 4 critical risk vectors: secrets, vulnerable dependencies, endpoints, and exploit paths.",
       metrics: [
@@ -198,14 +329,49 @@ export const portfolioData: PortfolioData = {
         "Python",
         "LangChain",
       ],
+      architectureSteps: [
+        "GitHub Repository",
+        "Repository Ingestion",
+        "Static Signal Extraction",
+        "Neo4j Graph Mapping",
+        "Attack Path Discovery",
+        "Explainable Risk Report",
+      ],
       visualWorkflow: [
         "Repository Ingest",
         "Secrets & Dependents Scan",
         "Neo4j Graph Database Mapping",
         "Attack Path Analysis & Explainable AI",
       ],
+      features: [
+        "GitHub repository ingestion",
+        "Secret, dependency, endpoint, and attack-path detection",
+        "Neo4j graph intelligence",
+        "Visual graph exploration using vis.js",
+        "Explainable security triage",
+      ],
+      role:
+        "Designed the repository ingestion flow, graph-risk model, FastAPI backend, and explainable visualization path for security triage.",
+      challenges: [
+        "Extracting useful signals from repositories",
+        "Representing codebase risk as a graph",
+        "Making attack paths explainable instead of black-box",
+        "Presenting security findings clearly to users",
+      ],
+      outcome:
+        "The project surfaced four major risk signals and helped convert repository data into explainable graph-based threat intelligence.",
+      recruiterTakeaway:
+        "This project demonstrates Pushkraj's ability to combine backend engineering, graph databases, AI security thinking, and visual intelligence to make complex repository risks easier to understand.",
+      links: {
+        github: "https://github.com/PushkrajKohok",
+      },
+      visualTheme: {
+        accent: "blue",
+        gradient: "from-accent-blue via-accent-cyan to-accent-violet",
+        glow: "bg-accent-blue/10",
+      },
       githubUrl: "https://github.com/PushkrajKohok",
-      demoUrl: "#",
+      demoUrl: "/projects/codebleed",
     },
   ],
   experience: [

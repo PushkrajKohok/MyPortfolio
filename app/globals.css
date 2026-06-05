@@ -50,6 +50,11 @@ body {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
+:where(a, button, input, textarea):focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.75);
+  outline-offset: 3px;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

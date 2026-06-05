@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Code, ExternalLink, FolderGit2 } from "lucide-react";
 import { Github } from "@/components/icons";
@@ -93,6 +94,7 @@ export default function Projects() {
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 onMouseEnter={() => setHoveredId(project.id)}
                 onMouseLeave={() => setHoveredId(null)}
+                whileHover={{ y: -6 }}
                 className="relative flex flex-col justify-between rounded-2xl border transition-all duration-300 h-full p-6 glass-panel"
                 style={{
                   borderColor: isHovered
@@ -136,7 +138,7 @@ export default function Projects() {
 
                   {/* Description */}
                   <p className="text-sm text-gray-400 leading-relaxed mb-6">
-                    {project.description}
+                    {project.shortDescription}
                   </p>
 
                   {/* Tech stack badges */}
@@ -162,19 +164,21 @@ export default function Projects() {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`Open ${project.title} GitHub repository`}
                       className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
                     >
                       <Github className="w-4 h-4" />
                       <span>GitHub</span>
                     </a>
                     
-                    <a
-                      href={project.demoUrl}
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      aria-label={`View ${project.title} case study`}
                       className="inline-flex items-center gap-1.5 text-xs text-accent-cyan hover:text-accent-cyan/85 font-medium ml-auto"
                     >
                       <span>View Case Study</span>
                       <ExternalLink className="w-3 h-3" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </motion.div>

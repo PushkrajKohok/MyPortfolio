@@ -6,6 +6,8 @@ import {
   ArrowRight,
   Bot,
   Sparkles,
+  FileText,
+  GraduationCap,
   TrendingDown,
   Zap,
   Search,
@@ -26,6 +28,7 @@ const commandCenterStats = [
 export default function Hero() {
   const { name, tagline, bio, github, linkedin } = portfolioData.personalInfo;
   const badges = portfolioData.heroBadges;
+  const resumeUrl = "/Pushkraj_Kohok_Resume.pdf";
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -90,6 +93,16 @@ export default function Hero() {
             {bio}
           </motion.p>
 
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.35 }}
+            className="mb-8 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-gray-300"
+          >
+            <GraduationCap className="w-4 h-4 text-accent-cyan" />
+            <span>MS Artificial Intelligence student at Illinois Tech, Chicago</span>
+          </motion.div>
+
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -108,17 +121,27 @@ export default function Hero() {
             <a
               href="#ai-agent"
               onClick={(e) => handleScrollTo(e, "#ai-agent")}
-              className="inline-flex items-center gap-2 px-5 py-3 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white font-medium rounded-xl transition-all duration-300 text-sm"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-accent-cyan/25 hover:scale-[1.02] text-white font-medium rounded-xl transition-all duration-300 text-sm"
             >
               <Bot className="w-4 h-4" />
               <span>Ask My AI Agent</span>
+            </a>
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Pushkraj Kohok resume in a new tab"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-accent-cyan/25 hover:scale-[1.02] text-white font-medium rounded-xl transition-all duration-300 text-sm"
+            >
+              <FileText className="w-4 h-4" />
+              <span>Resume</span>
             </a>
             <a
               href={github}
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/10 rounded-xl transition-colors"
-              aria-label="GitHub"
+              aria-label="Open Pushkraj Kohok GitHub profile"
             >
               <Github className="w-4.5 h-4.5" />
             </a>
@@ -127,7 +150,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/10 rounded-xl transition-colors"
-              aria-label="LinkedIn"
+              aria-label="Open Pushkraj Kohok LinkedIn profile"
             >
               <Linkedin className="w-4.5 h-4.5" />
             </a>

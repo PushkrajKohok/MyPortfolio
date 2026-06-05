@@ -16,6 +16,8 @@ const navItems = [
   { name: "Contact", href: "#contact" },
 ];
 
+const resumeUrl = "/Pushkraj_Kohok_Resume.pdf";
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -47,7 +49,7 @@ export default function Navbar() {
         <a
           href="#hero"
           onClick={(e) => handleScrollTo(e, "#hero")}
-          className="flex items-center gap-2.5 group"
+          className="flex items-center gap-2.5 group rounded-lg"
         >
           <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-white/5 border border-white/10 group-hover:border-accent-cyan/50 transition-colors">
             <Cpu className="w-4.5 h-4.5 text-accent-cyan group-hover:text-accent-violet transition-colors" />
@@ -79,7 +81,7 @@ export default function Navbar() {
             href={github}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="GitHub"
+            aria-label="Open Pushkraj Kohok GitHub profile"
             className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
           >
             <Github className="w-4.5 h-4.5" />
@@ -88,7 +90,7 @@ export default function Navbar() {
             href={linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="LinkedIn"
+            aria-label="Open Pushkraj Kohok LinkedIn profile"
             className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
           >
             <Linkedin className="w-4.5 h-4.5" />
@@ -104,8 +106,10 @@ export default function Navbar() {
             Run Agent
           </a>
           <a
-            href="#contact"
-            onClick={(e) => handleScrollTo(e, "#contact")}
+            href={resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Pushkraj Kohok resume in a new tab"
             className="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300"
           >
             <FileText className="w-3.5 h-3.5" />
@@ -116,7 +120,7 @@ export default function Navbar() {
         {/* Mobile menu button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden p-2 text-gray-400 hover:text-white focus:outline-none"
+          className="lg:hidden p-2 text-gray-400 hover:text-white rounded-lg"
           aria-label="Toggle navigation"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -150,7 +154,7 @@ export default function Navbar() {
                   href={github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="GitHub"
+                  aria-label="Open Pushkraj Kohok GitHub profile"
                   className="p-2.5 bg-white/5 text-gray-400 hover:text-white rounded-lg border border-white/10"
                 >
                   <Github className="w-5 h-5" />
@@ -159,7 +163,7 @@ export default function Navbar() {
                   href={linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="LinkedIn"
+                  aria-label="Open Pushkraj Kohok LinkedIn profile"
                   className="p-2.5 bg-white/5 text-gray-400 hover:text-white rounded-lg border border-white/10"
                 >
                   <Linkedin className="w-5 h-5" />
@@ -174,11 +178,13 @@ export default function Navbar() {
                 Run Agent
               </a>
               <a
-                href="#contact"
-                onClick={(e) => handleScrollTo(e, "#contact")}
+                href={resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Pushkraj Kohok resume in a new tab"
                 className="w-full text-center px-4 py-2.5 text-sm font-mono rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:text-white"
               >
-                Resume Placeholder
+                Resume
               </a>
             </div>
           </motion.div>

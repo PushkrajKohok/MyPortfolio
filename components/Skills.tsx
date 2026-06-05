@@ -152,7 +152,7 @@ export default function Skills() {
                   {catBlock.skills.map((skill) => (
                     <span
                       key={skill}
-                      className={`text-xs px-3 py-1 rounded-lg border font-medium font-mono transition-transform duration-300 hover:scale-105 ${getCategoryBadgeStyle(
+                    className={`text-xs px-3 py-1 rounded-lg border font-medium font-mono transition-all duration-300 hover:scale-105 hover:shadow-lg ${getCategoryBadgeStyle(
                         catBlock.category
                       )}`}
                     >

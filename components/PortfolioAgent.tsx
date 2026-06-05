@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Send, Bot, User } from "lucide-react";
+import { Send, Bot, User, ShieldCheck } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 
 interface Message {
@@ -74,8 +74,8 @@ export default function PortfolioAgent() {
       setMessages((prev) => {
         const updated = [...prev];
         const lastMsg = updated[updated.length - 1];
-        const errorText =
-          "AI agent is not configured yet. Please add the required API key in .env.local.";
+      const errorText =
+          "I could not complete that response right now. Please try one of the suggested portfolio questions or ask again in a moment.";
 
         if (lastMsg?.sender === "agent") {
           updated[updated.length - 1] = { ...lastMsg, text: errorText };
@@ -171,7 +171,7 @@ export default function PortfolioAgent() {
       {/* Background decoration blur */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-cyan/5 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
           <motion.div
@@ -205,10 +205,10 @@ export default function PortfolioAgent() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="glass-panel rounded-3xl border border-white/5 shadow-2xl flex flex-col h-[620px] max-h-[78vh] overflow-hidden"
+          className="glass-panel rounded-2xl sm:rounded-3xl border border-white/5 shadow-2xl flex flex-col h-[680px] max-h-[82vh] overflow-hidden"
         >
           {/* Top Info Bar */}
-          <div className="px-6 py-4 bg-white/5 border-b border-white/5 flex items-center justify-between">
+          <div className="px-4 sm:px-6 py-4 bg-white/5 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-accent-cyan/10 border border-accent-cyan/25 flex items-center justify-center">
                 <Bot className="w-4.5 h-4.5 text-accent-cyan" />
@@ -223,19 +223,23 @@ export default function PortfolioAgent() {
                 </span>
               </div>
             </div>
-            <span className="text-[10px] font-mono text-gray-500">
-              Streaming enabled
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 border border-emerald-500/15 bg-emerald-500/5 rounded-lg px-2.5 py-1 w-fit">
+              <ShieldCheck className="w-3 h-3" />
+              Demo-safe fallback
             </span>
           </div>
 
           {/* Messages Log Panel */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
             {messages.map((msg, index) => {
               const isAgent = msg.sender === "agent";
               return (
-                <div
+                <motion.div
                   key={index}
-                  className={`flex items-start gap-3.5 max-w-[85%] ${
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className={`flex items-start gap-3 max-w-[94%] sm:max-w-[85%] ${
                     isAgent ? "self-start" : "self-end ml-auto flex-row-reverse"
                   }`}
                 >
@@ -252,7 +256,7 @@ export default function PortfolioAgent() {
 
                   {/* Message bubble */}
                   <div
-                    className={`p-4 rounded-2xl border text-sm leading-relaxed ${
+                    className={`p-3.5 sm:p-4 rounded-2xl border text-sm leading-relaxed ${
                       isAgent
                         ? "bg-slate-900/60 border-white/5 rounded-tl-sm text-gray-300"
                         : "bg-accent-violet/10 border-accent-violet/20 rounded-tr-sm text-white"
@@ -260,7 +264,7 @@ export default function PortfolioAgent() {
                   >
                     {formatMessageText(msg.text)}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
 
@@ -282,17 +286,18 @@ export default function PortfolioAgent() {
           </div>
 
           {/* Question Chips Panel */}
-          <div className="px-6 py-3 border-t border-white/5 bg-slate-950/20">
+          <div className="px-4 sm:px-6 py-3 border-t border-white/5 bg-slate-950/20">
             <span className="text-[10px] font-mono text-gray-500 block mb-2">
               Suggested Questions:
             </span>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap">
               {PREDEFINED_QUESTIONS.map((q) => (
                 <button
                   key={q.query}
                   disabled={isTyping}
                   onClick={() => void handleSendMessage(q.query)}
-                  className="px-3 py-1.5 rounded-lg border border-white/5 bg-white/5 text-[11px] font-mono text-gray-300 hover:text-white hover:border-accent-cyan/30 hover:bg-accent-cyan/5 transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none text-left"
+                  aria-label={`Ask: ${q.query}`}
+                  className="shrink-0 px-3 py-1.5 rounded-lg border border-white/5 bg-white/5 text-[11px] font-mono text-gray-300 hover:text-white hover:border-accent-cyan/30 hover:bg-accent-cyan/5 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none text-left"
                 >
                   {q.query}
                 </button>
@@ -301,13 +306,13 @@ export default function PortfolioAgent() {
           </div>
 
           {/* Text Input Panel */}
-          <div className="p-4 bg-slate-950/40 border-t border-white/5">
+          <div className="p-3 sm:p-4 bg-slate-950/40 border-t border-white/5">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 void handleSendMessage(inputValue);
               }}
-              className="flex items-center gap-2"
+              className="flex items-end gap-2"
             >
               <textarea
                 value={inputValue}
@@ -319,6 +324,7 @@ export default function PortfolioAgent() {
                   }
                 }}
                 disabled={isTyping}
+                aria-label="Ask Pushkraj's AI portfolio agent a question"
                 placeholder={isTyping ? "Agent is typing..." : "Type custom question about Pushkraj..."}
                 rows={1}
                 className="max-h-28 min-h-12 flex-1 resize-none bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-accent-cyan/50 transition-colors disabled:opacity-50"
@@ -326,7 +332,8 @@ export default function PortfolioAgent() {
               <button
                 type="submit"
                 disabled={!inputValue.trim() || isTyping}
-                className="p-3 bg-gradient-to-r from-accent-cyan to-accent-blue text-bg-deep rounded-xl hover:opacity-90 transition-opacity disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center"
+                aria-label="Send message"
+                className="p-3 min-h-12 bg-gradient-to-r from-accent-cyan to-accent-blue text-bg-deep rounded-xl hover:opacity-90 hover:scale-[1.02] transition-all disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center"
               >
                 <Send className="w-4 h-4" />
               </button>

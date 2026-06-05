@@ -139,9 +139,15 @@ export default function ExperienceTimeline() {
                   className="relative grid grid-cols-1 md:grid-cols-2 items-start"
                 >
                   {/* Outer Timeline Dot Indicator */}
-                  <div className="absolute left-4 md:left-1/2 top-6 -translate-x-1/2 z-20 w-8 h-8 rounded-full bg-bg-deep border-2 border-accent-cyan flex items-center justify-center shadow-lg shadow-accent-cyan/15">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.35, delay: 0.1 }}
+                    className="absolute left-4 md:left-1/2 top-6 -translate-x-1/2 z-20 w-8 h-8 rounded-full bg-bg-deep border-2 border-accent-cyan flex items-center justify-center shadow-lg shadow-accent-cyan/15"
+                  >
                     <div className="w-3 h-3 rounded-full bg-accent-cyan animate-pulse" />
-                  </div>
+                  </motion.div>
 
                   <div className="pl-12 md:pl-0">{isLeft ? dateMeta : contentCard}</div>
                   <div className="pl-12 md:pl-0">{isLeft ? contentCard : dateMeta}</div>
