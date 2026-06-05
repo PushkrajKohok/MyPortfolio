@@ -13,37 +13,34 @@ export default function Projects() {
   // Workflow pipeline icon mapper for visuals
   const renderWorkflow = (workflow: string[], id: string) => {
     return (
-      <div className="mt-6 p-4 bg-black/30 border border-white/5 rounded-xl">
+      <div className="mt-6 p-4 bg-black/30 border border-white/5 rounded-xl overflow-hidden">
         <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 block mb-3">
           Pipeline Architecture Diagram
         </span>
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          {workflow.map((step, idx) => (
-            <React.Fragment key={step}>
-              {/* Step bubble */}
-              <div
-                className={`px-3 py-1.5 rounded-lg border text-xs font-mono transition-all duration-300 ${
-                  hoveredId === id
-                    ? "bg-accent-cyan/10 border-accent-cyan/40 text-accent-cyan"
-                    : "bg-white/5 border-white/10 text-gray-400"
-                }`}
-              >
-                {step}
-              </div>
-              
-              {/* Connection arrow (only between steps) */}
-              {idx < workflow.length - 1 && (
-                <div className="text-gray-600 font-mono text-sm hidden sm:block">
-                  &rarr;
+        <div className="overflow-x-auto overflow-y-hidden pb-2 pr-1 [scrollbar-color:rgba(34,211,238,0.35)_rgba(255,255,255,0.06)] [scrollbar-width:thin]">
+          <div className="flex w-max min-w-full items-center gap-3 text-left">
+            {workflow.map((step, idx) => (
+              <React.Fragment key={step}>
+                {/* Step bubble */}
+                <div
+                  className={`min-h-12 w-32 shrink-0 px-3 py-2 rounded-lg border text-xs font-mono leading-tight transition-all duration-300 ${
+                    hoveredId === id
+                      ? "bg-accent-cyan/10 border-accent-cyan/40 text-accent-cyan"
+                      : "bg-white/5 border-white/10 text-gray-400"
+                  }`}
+                >
+                  {step}
                 </div>
-              )}
-              {idx < workflow.length - 1 && (
-                <div className="text-gray-600 font-mono text-xs sm:hidden py-1">
-                  &darr;
-                </div>
-              )}
-            </React.Fragment>
-          ))}
+
+                {/* Connection arrow (only between steps) */}
+                {idx < workflow.length - 1 && (
+                  <div className="shrink-0 text-gray-600 font-mono text-sm">
+                    &rarr;
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </div>
     );
