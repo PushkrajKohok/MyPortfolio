@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
   Bot,
+  Download,
   Sparkles,
   FileText,
   GraduationCap,
@@ -29,6 +31,8 @@ export default function Hero() {
   const { name, tagline, bio, github, linkedin } = portfolioData.personalInfo;
   const badges = portfolioData.heroBadges;
   const resumeUrl = "/Pushkraj_Kohok_Resume.pdf";
+  const resumeDownloadUrl = "/resume/download";
+  const profileImageUrl = "/Pushkraj_Kohok_Picture.jpeg";
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -50,6 +54,15 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-6 relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left column — Text content */}
         <div className="lg:col-span-7 flex flex-col items-start text-left">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 18 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="lg:hidden self-center mb-8"
+          >
+            <ProfilePortrait src={profileImageUrl} sizeClass="w-40 h-40" />
+          </motion.div>
+
           {/* Status badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -130,11 +143,20 @@ export default function Hero() {
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Open Pushkraj Kohok resume in a new tab"
+              aria-label="Open Pushkraj Kohok resume PDF in a new tab"
               className="inline-flex items-center gap-2 px-5 py-3 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-accent-cyan/25 hover:scale-[1.02] text-white font-medium rounded-xl transition-all duration-300 text-sm"
             >
               <FileText className="w-4 h-4" />
-              <span>Resume</span>
+              <span>View Resume</span>
+            </a>
+            <a
+              href={resumeDownloadUrl}
+              download
+              aria-label="Download Pushkraj Kohok resume PDF"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-accent-violet/25 hover:scale-[1.02] text-white font-medium rounded-xl transition-all duration-300 text-sm"
+            >
+              <Download className="w-4 h-4" />
+              <span>Download Resume</span>
             </a>
             <a
               href={github}
@@ -189,6 +211,10 @@ export default function Hero() {
             <div className="absolute -top-12 -right-12 w-40 h-40 bg-accent-cyan/15 rounded-full blur-[60px] pointer-events-none" />
             <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-accent-violet/10 rounded-full blur-[50px] pointer-events-none" />
 
+            <div className="flex justify-center mb-7">
+              <ProfilePortrait src={profileImageUrl} sizeClass="w-44 h-44" />
+            </div>
+
             {/* Card header */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
@@ -237,5 +263,25 @@ export default function Hero() {
       <div className="absolute top-[35%] right-[6%] w-2 h-2 bg-accent-violet rounded-full animate-pulse opacity-40" />
       <div className="absolute bottom-[20%] left-[15%] w-1.5 h-1.5 bg-accent-blue rounded-full animate-float opacity-30" />
     </section>
+  );
+}
+
+function ProfilePortrait({ src, sizeClass }: { src: string; sizeClass: string }) {
+  return (
+    <div
+      className={`relative ${sizeClass} rounded-full bg-gradient-to-br from-accent-cyan via-accent-blue to-accent-violet p-[3px] shadow-2xl shadow-accent-cyan/20 transition-transform duration-300 hover:scale-[1.03]`}
+    >
+      <div className="relative h-full w-full overflow-hidden rounded-full border border-white/10 bg-slate-950">
+        <Image
+          src={src}
+          alt="Pushkraj Kohok profile picture"
+          fill
+          priority
+          sizes="(max-width: 1024px) 160px, 176px"
+          className="object-cover"
+        />
+      </div>
+      <span className="absolute inset-0 -z-10 rounded-full bg-accent-cyan/20 blur-2xl" />
+    </div>
   );
 }

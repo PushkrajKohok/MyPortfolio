@@ -109,11 +109,11 @@ export default function Navbar() {
             href={resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Open Pushkraj Kohok resume in a new tab"
+            aria-label="Open Pushkraj Kohok resume PDF in a new tab"
             className="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300"
           >
             <FileText className="w-3.5 h-3.5" />
-            Resume
+            View Resume
           </a>
         </div>
 
@@ -181,10 +181,10 @@ export default function Navbar() {
                 href={resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Open Pushkraj Kohok resume in a new tab"
+                aria-label="Open Pushkraj Kohok resume PDF in a new tab"
                 className="w-full text-center px-4 py-2.5 text-sm font-mono rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:text-white"
               >
-                Resume
+                View Resume
               </a>
             </div>
           </motion.div>

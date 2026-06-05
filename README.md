@@ -37,14 +37,17 @@ OPENAI_API_KEY=your_api_key_here
 
 The app remains usable when the key is missing.
 
-## Required Public Assets
+## Public Assets
 
-Add these files before production launch:
+The recruiter-facing assets live in `public/` so they are available from stable site URLs:
 
 - `public/Pushkraj_Kohok_Resume.pdf`
+- `public/Pushkraj_Kohok_Picture.jpeg`
 - `public/og-image.png` sized around `1200x630`
 
-The app references these paths for resume links and social previews. Missing files will not break the build, but the resume link or social preview image will return 404 until the assets are added.
+The profile picture is displayed in the hero section through `/Pushkraj_Kohok_Picture.jpeg`.
+The resume can be opened in a new tab with the View Resume button through `/Pushkraj_Kohok_Resume.pdf` and downloaded with the Download Resume button through `/resume/download`.
+The social preview image uses `/og-image.png`.
 
 ## SEO Routes
 
@@ -63,6 +66,6 @@ npm run build
 
 1. Import the GitHub repository into Vercel.
 2. Set `OPENAI_API_KEY` only if live model responses are desired.
-3. Add the resume PDF and OG image under `public/`.
+3. Confirm the resume PDF, profile picture, and OG image are present under `public/`.
 4. Keep the production URL aligned with `siteUrl` in `app/layout.tsx`, `app/sitemap.ts`, and `app/robots.ts`.
 5. Deploy with the default Next.js settings.

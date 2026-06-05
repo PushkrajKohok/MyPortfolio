@@ -6,6 +6,7 @@ import {
   BriefcaseBusiness,
   Check,
   Copy,
+  Download,
   FileText,
   GraduationCap,
   Mail,
@@ -19,6 +20,7 @@ export default function Contact() {
   const { email, phone, linkedin, github } = portfolioData.personalInfo;
   const roleTargets = portfolioData.roleTargets;
   const resumeUrl = "/Pushkraj_Kohok_Resume.pdf";
+  const resumeDownloadUrl = "/resume/download";
   const phoneHref = "tel:+18728990708";
   const emailHref = `mailto:${email}?subject=Interested%20in%20Pushkraj%20Kohok%20for%20AI%2FML%20Engineer%20Role&body=Hi%20Pushkraj%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect%20regarding%20an%20opportunity.`;
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -96,6 +98,27 @@ export default function Contact() {
                     Based in Chicago and looking for full-time engineering roles across applied AI,
                     backend systems, and AI product teams.
                   </p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    <a
+                      href={resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Open Pushkraj Kohok resume PDF in a new tab"
+                      className="inline-flex items-center gap-2 rounded-lg border border-accent-cyan/20 bg-accent-cyan/5 px-3 py-2 text-[11px] font-mono text-accent-cyan hover:bg-accent-cyan/10 transition-colors"
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      View Resume
+                    </a>
+                    <a
+                      href={resumeDownloadUrl}
+                      download
+                      aria-label="Download Pushkraj Kohok resume PDF"
+                      className="inline-flex items-center gap-2 rounded-lg border border-accent-violet/20 bg-accent-violet/5 px-3 py-2 text-[11px] font-mono text-accent-violet hover:bg-accent-violet/10 transition-colors"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      Download Resume
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -133,10 +156,19 @@ export default function Contact() {
                   href={resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Open Pushkraj Kohok resume in a new tab"
+                  aria-label="Open Pushkraj Kohok resume PDF in a new tab"
                   className="flex items-center gap-2 text-xs font-mono bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/10 px-4 py-2.5 rounded-xl text-gray-300 hover:text-white transition-colors"
                 >
                   <FileText className="w-4.5 h-4.5" />
+                  <span>View Resume</span>
+                </a>
+                <a
+                  href={resumeDownloadUrl}
+                  download
+                  aria-label="Download Pushkraj Kohok resume PDF"
+                  className="flex items-center gap-2 text-xs font-mono bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/10 px-4 py-2.5 rounded-xl text-gray-300 hover:text-white transition-colors"
+                >
+                  <Download className="w-4.5 h-4.5" />
                   <span>Download Resume</span>
                 </a>
               </div>
