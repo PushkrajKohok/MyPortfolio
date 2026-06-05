@@ -211,14 +211,14 @@ export const portfolioData: PortfolioData = {
       recruiterTakeaway:
         "This project demonstrates Pushkraj's ability to build practical RAG and multi-agent AI systems that solve real education workflow problems and improve productivity.",
       links: {
-        github: "https://github.com/PushkrajKohok",
+        github: "https://github.com/PushkrajKohok/TeachFusion-AI",
       },
       visualTheme: {
         accent: "cyan",
         gradient: "from-accent-cyan via-accent-blue to-accent-violet",
         glow: "bg-accent-cyan/10",
       },
-      githubUrl: "https://github.com/PushkrajKohok",
+      githubUrl: "https://github.com/PushkrajKohok/TeachFusion-AI",
       demoUrl: "/projects/teachfusion-ai",
     },
     {
@@ -288,14 +288,14 @@ export const portfolioData: PortfolioData = {
       recruiterTakeaway:
         "This project demonstrates Pushkraj's ability to design AI-assisted healthcare workflows with full-stack engineering, backend architecture, access control, and human-in-the-loop review.",
       links: {
-        github: "https://github.com/PushkrajKohok",
+        github: "https://github.com/PushkrajKohok/MedOrbit",
       },
       visualTheme: {
         accent: "violet",
         gradient: "from-accent-violet via-accent-blue to-accent-cyan",
         glow: "bg-accent-violet/10",
       },
-      githubUrl: "https://github.com/PushkrajKohok",
+      githubUrl: "https://github.com/PushkrajKohok/MedOrbit",
       demoUrl: "/projects/medorbit",
     },
     {
@@ -363,14 +363,14 @@ export const portfolioData: PortfolioData = {
       recruiterTakeaway:
         "This project demonstrates Pushkraj's ability to combine backend engineering, graph databases, AI security thinking, and visual intelligence to make complex repository risks easier to understand.",
       links: {
-        github: "https://github.com/PushkrajKohok",
+        github: "https://github.com/PushkrajKohok/codebleed",
       },
       visualTheme: {
         accent: "blue",
         gradient: "from-accent-blue via-accent-cyan to-accent-violet",
         glow: "bg-accent-blue/10",
       },
-      githubUrl: "https://github.com/PushkrajKohok",
+      githubUrl: "https://github.com/PushkrajKohok/codebleed",
       demoUrl: "/projects/codebleed",
     },
   ],

@@ -180,7 +180,9 @@ export default function Skills() {
             {portfolioData.languages.map((lang) => (
               <div key={lang} className="flex flex-col items-center">
                 <span className="text-sm font-semibold text-white font-mono">{lang}</span>
-                <span className="text-[10px] text-gray-500 mt-1 uppercase font-mono">Fluent</span>
+                <span className="text-[10px] text-gray-500 mt-1 uppercase font-mono">
+                  {lang === "Spanish" ? "Beginner" : "Fluent"}
+                </span>
               </div>
             ))}
           </div>

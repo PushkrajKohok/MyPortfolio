@@ -10,22 +10,9 @@ import {
   Sparkles,
   FileText,
   GraduationCap,
-  TrendingDown,
-  Zap,
-  Search,
-  TrendingUp,
-  Target,
 } from "lucide-react";
 import { Github, Linkedin } from "@/components/icons";
 import { portfolioData } from "@/data/portfolio";
-
-const commandCenterStats = [
-  { value: "90%", label: "DA effort reduced", icon: <TrendingDown className="w-3.5 h-3.5" /> },
-  { value: "80%", label: "Transaction time cut", icon: <Zap className="w-3.5 h-3.5" /> },
-  { value: "10×", label: "Faster AI search", icon: <Search className="w-3.5 h-3.5" /> },
-  { value: "300%", label: "Sales increase", icon: <TrendingUp className="w-3.5 h-3.5" /> },
-  { value: "70%", label: "Extraction accuracy↑", icon: <Target className="w-3.5 h-3.5" /> },
-];
 
 export default function Hero() {
   const { name, tagline, bio, github, linkedin } = portfolioData.personalInfo;
@@ -199,61 +186,21 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right column — AI Command Center Card */}
+        {/* Right column — Profile visual card */}
         <motion.div
           initial={{ opacity: 0, x: 40, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="lg:col-span-5 hidden lg:block"
         >
-          <div className="glass-panel rounded-2xl border border-white/5 p-6 relative overflow-hidden">
+          <div className="relative min-h-[560px] flex flex-col items-center justify-center">
             {/* Decorative glow */}
-            <div className="absolute -top-12 -right-12 w-40 h-40 bg-accent-cyan/15 rounded-full blur-[60px] pointer-events-none" />
-            <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-accent-violet/10 rounded-full blur-[50px] pointer-events-none" />
+            <div className="absolute top-12 right-4 w-64 h-64 bg-accent-cyan/15 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute bottom-10 left-4 w-56 h-56 bg-accent-violet/12 rounded-full blur-[70px] pointer-events-none" />
 
-            <div className="flex justify-center mb-7">
-              <ProfilePortrait src={profileImageUrl} sizeClass="w-44 h-44" />
+            <div className="relative z-10 flex justify-center">
+              <ProfilePortrait src={profileImageUrl} sizeClass="w-[27rem] h-[27rem] xl:w-[30rem] xl:h-[30rem]" />
             </div>
-
-            {/* Card header */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[11px] font-mono text-gray-400">IMPACT_DASHBOARD</span>
-              </div>
-              <span className="text-[10px] font-mono text-gray-500 px-2 py-0.5 bg-white/5 rounded border border-white/10">
-                LIVE
-              </span>
-            </div>
-
-            {/* Stats grid */}
-            <div className="space-y-3">
-              {commandCenterStats.map((stat, idx) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.6 + idx * 0.1 }}
-                  className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-accent-cyan/20 transition-colors group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="text-accent-cyan/60 group-hover:text-accent-cyan transition-colors">
-                      {stat.icon}
-                    </div>
-                    <span className="text-xs text-gray-400 font-mono">{stat.label}</span>
-                  </div>
-                  <span className="text-base font-extrabold font-mono text-white">
-                    {stat.value}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Bottom accent line */}
-            <div className="mt-5 h-px bg-gradient-to-r from-transparent via-accent-cyan/30 to-transparent" />
-            <p className="text-[10px] font-mono text-gray-500 text-center mt-3">
-              Verified production metrics from professional engagements
-            </p>
           </div>
         </motion.div>
       </div>
@@ -277,7 +224,8 @@ function ProfilePortrait({ src, sizeClass }: { src: string; sizeClass: string })
           alt="Pushkraj Kohok profile picture"
           fill
           priority
-          sizes="(max-width: 1024px) 160px, 176px"
+          unoptimized
+          sizes="(max-width: 1024px) 160px, (max-width: 1280px) 432px, 480px"
           className="object-cover"
         />
       </div>
