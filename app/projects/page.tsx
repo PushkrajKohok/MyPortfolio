@@ -4,6 +4,8 @@ import { ArrowLeft, ArrowRight, FolderGit2 } from "lucide-react";
 import Footer from "@/components/Footer";
 import { portfolioData } from "@/data/portfolio";
 
+export const dynamicParams = false;
+
 export const metadata: Metadata = {
   title: "Projects",
   description:
