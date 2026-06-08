@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Award, GraduationCap, MapPin, Notebook } from "lucide-react";
+import { Award, ExternalLink, GraduationCap, MapPin, Notebook } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 
 export default function Education() {
@@ -97,6 +97,11 @@ export default function Education() {
                   <div className="flex flex-col gap-2">
                     {edu.highlights.map((highlight, hIdx) => {
                       const isPublication = highlight.toLowerCase().includes("publication");
+                      const publicationLabel =
+                        isPublication && edu.publicationPage
+                          ? `${highlight} Page ${edu.publicationPage}.`
+                          : highlight;
+
                       return (
                         <div
                           key={hIdx}
@@ -109,7 +114,20 @@ export default function Education() {
                           ) : (
                             <Notebook className="w-4.5 h-4.5 text-accent-violet mt-0.5 shrink-0" />
                           )}
-                          <span>{highlight}</span>
+                          {isPublication && edu.publicationUrl ? (
+                            <a
+                              href={edu.publicationUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`Open publication issue, page ${edu.publicationPage ?? ""}`}
+                              className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
+                            >
+                              <span>{publicationLabel}</span>
+                              <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                            </a>
+                          ) : (
+                            <span>{highlight}</span>
+                          )}
                         </div>
                       );
                     })}

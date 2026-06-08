@@ -50,6 +50,8 @@ export interface Education {
   period: string;
   coursework: string[];
   highlights?: string[];
+  publicationUrl?: string;
+  publicationPage?: string;
 }
 
 export interface SkillCategory {
@@ -526,6 +528,8 @@ export const portfolioData: PortfolioData = {
       highlights: [
         "Publication: Co-authored research paper published in the International Journal of Advanced Science & Technology (Scopus indexed).",
       ],
+      publicationUrl: "http://sersc.org/journals/index.php/IJAST/issue/view/269",
+      publicationPage: "1191",
     },
   ],
   skills: [
