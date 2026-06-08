@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { TrendingDown, Zap, Search, TrendingUp, Target, Brain } from "lucide-react";
+import { BarChart3, TrendingDown, Zap, Search, TrendingUp, Target, Brain } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -36,6 +36,37 @@ export default function ImpactMetrics() {
   return (
     <section className="py-16 relative">
       <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent-cyan/25 bg-accent-cyan/5 text-accent-cyan text-xs font-mono mb-4"
+          >
+            <BarChart3 className="w-3.5 h-3.5" />
+            <span>Career Achievements</span>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: 0.08 }}
+            className="text-3xl sm:text-4xl font-bold text-white font-sans"
+          >
+            Key Achievements Delivered Across AI and Full-Stack Systems
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: 0.14 }}
+            className="text-gray-400 text-sm mt-3 font-mono"
+          >
+            Recruiter-ready highlights from production work, automation, search, and AI product delivery.
+          </motion.p>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
