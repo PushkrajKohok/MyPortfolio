@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Send, Bot, User, ShieldCheck } from "lucide-react";
+import { Bot, Send, Square, User, Volume2, VolumeX } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 
 interface Message {
@@ -13,6 +13,49 @@ interface Message {
 
 const PREDEFINED_QUESTIONS = portfolioData.agentQuestions;
 
+function getPreferredVoice(voices: SpeechSynthesisVoice[]) {
+  const englishVoices = voices.filter((voice) => voice.lang.toLowerCase().startsWith("en"));
+  const preferredNames = [
+    "microsoft david",
+    "david",
+    "daniel",
+    "alex",
+    "george",
+    "fred",
+    "google us english",
+    "english united states",
+  ];
+
+  return (
+    preferredNames
+      .map((name) =>
+        englishVoices.find((voice) => voice.name.toLowerCase().includes(name))
+      )
+      .find(Boolean) ??
+    englishVoices.find((voice) => voice.name.toLowerCase().includes("male")) ??
+    englishVoices[0] ??
+    voices[0] ??
+    null
+  );
+}
+
+function formatSpeechText(text: string) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, "$1")
+    .replace(/^\s*[-*]\s+/gm, "")
+    .replace(/^\s*\d+\.\s+/gm, "")
+    .replace(/×/g, " times")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getSpeechSegments(text: string) {
+  return formatSpeechText(text)
+    .split(/(?<=[.!?])\s+/)
+    .map((segment) => segment.trim())
+    .filter(Boolean);
+}
+
 export default function PortfolioAgent() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -22,7 +65,12 @@ export default function PortfolioAgent() {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
+  const [preferredVoice, setPreferredVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const speechRunRef = useRef(0);
+  const lastAutoSpokenMessageRef = useRef(0);
 
   // Keep new chat messages visible without moving the whole page.
   const scrollToBottom = () => {
@@ -38,6 +86,90 @@ export default function PortfolioAgent() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
+
+  useEffect(() => {
+    if (!("speechSynthesis" in window)) return;
+
+    const loadVoices = () => {
+      setSpeechSupported(true);
+      setPreferredVoice(getPreferredVoice(window.speechSynthesis.getVoices()));
+    };
+
+    const loadTimer = window.setTimeout(loadVoices, 0);
+    window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
+
+    return () => {
+      window.clearTimeout(loadTimer);
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.removeEventListener("voiceschanged", loadVoices);
+    };
+  }, []);
+
+  const stopSpeaking = useCallback(() => {
+    if (!speechSupported) return;
+    speechRunRef.current += 1;
+    window.speechSynthesis.cancel();
+    setSpeakingMessageIndex(null);
+  }, [speechSupported]);
+
+  const speakMessage = useCallback((text: string, index: number) => {
+    if (!speechSupported) return;
+
+    const speechSegments = getSpeechSegments(text);
+    if (speechSegments.length === 0) return;
+
+    speechRunRef.current += 1;
+    const runId = speechRunRef.current;
+    window.speechSynthesis.cancel();
+
+    setSpeakingMessageIndex(index);
+
+    const speakSegment = (segmentIndex: number) => {
+      if (speechRunRef.current !== runId) return;
+
+      const segment = speechSegments[segmentIndex];
+      if (!segment) {
+        setSpeakingMessageIndex(null);
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(segment);
+      const isMetricSegment = /\d|%|times|impact|increase|reduced|faster/i.test(segment);
+
+      utterance.voice = preferredVoice;
+      utterance.rate = isMetricSegment ? 1.02 : 0.98;
+      utterance.pitch = isMetricSegment ? 0.92 : 0.86;
+      utterance.volume = 1;
+      utterance.onend = () => {
+        window.setTimeout(() => speakSegment(segmentIndex + 1), isMetricSegment ? 160 : 110);
+      };
+      utterance.onerror = () => setSpeakingMessageIndex(null);
+
+      window.speechSynthesis.speak(utterance);
+    };
+
+    speakSegment(0);
+  }, [preferredVoice, speechSupported]);
+
+  useEffect(() => {
+    if (!speechSupported || isTyping) return;
+
+    const latestIndex = messages.length - 1;
+    const latestMessage = messages[latestIndex];
+
+    if (
+      !latestMessage ||
+      latestMessage.sender !== "agent" ||
+      latestMessage.isStreaming ||
+      !latestMessage.text.trim() ||
+      latestIndex <= lastAutoSpokenMessageRef.current
+    ) {
+      return;
+    }
+
+    lastAutoSpokenMessageRef.current = latestIndex;
+    speakMessage(latestMessage.text, latestIndex);
+  }, [isTyping, messages, speakMessage, speechSupported]);
 
   const streamAssistantResponse = async (nextMessages: Message[]) => {
     setIsTyping(true);
@@ -110,6 +242,8 @@ export default function PortfolioAgent() {
 
   const handleSendMessage = async (text: string) => {
     if (!text.trim() || isTyping) return;
+
+    stopSpeaking();
 
     const userMessage: Message = { sender: "user", text: text.trim() };
     const nextMessages = [...messages, userMessage];
@@ -229,10 +363,27 @@ export default function PortfolioAgent() {
                 </span>
               </div>
             </div>
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 border border-emerald-500/15 bg-emerald-500/5 rounded-lg px-2.5 py-1 w-fit">
-              <ShieldCheck className="w-3 h-3" />
-              Demo-safe fallback
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 border border-emerald-500/15 bg-emerald-500/5 rounded-lg px-2.5 py-1 w-fit">
+                {speechSupported ? (
+                  <Volume2 className="w-3 h-3" />
+                ) : (
+                  <VolumeX className="w-3 h-3" />
+                )}
+                {speechSupported ? "Auto voice ready" : "Voice unavailable"}
+              </span>
+              {speakingMessageIndex !== null && (
+                <button
+                  type="button"
+                  onClick={stopSpeaking}
+                  aria-label="Stop voice playback"
+                  className="inline-flex items-center gap-1.5 text-[10px] font-mono text-accent-cyan border border-accent-cyan/20 bg-accent-cyan/5 rounded-lg px-2.5 py-1 hover:bg-accent-cyan/10 transition-colors"
+                >
+                  <Square className="w-3 h-3" />
+                  Stop Voice
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Messages Log Panel */}
@@ -269,6 +420,37 @@ export default function PortfolioAgent() {
                     }`}
                   >
                     {formatMessageText(msg.text)}
+                    {isAgent && msg.text.trim() && !msg.isStreaming && (
+                      <div className="mt-3 flex items-center gap-2 border-t border-white/5 pt-3">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            speakingMessageIndex === index
+                              ? stopSpeaking()
+                              : speakMessage(msg.text, index)
+                          }
+                          disabled={!speechSupported}
+                          aria-label={
+                            speakingMessageIndex === index
+                              ? "Stop reading this answer"
+                              : "Read this answer aloud"
+                          }
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-accent-cyan/20 bg-accent-cyan/5 px-2.5 py-1.5 text-[10px] font-mono text-accent-cyan hover:bg-accent-cyan/10 disabled:cursor-not-allowed disabled:opacity-40"
+                        >
+                          {speakingMessageIndex === index ? (
+                            <Square className="w-3 h-3" />
+                          ) : (
+                            <Volume2 className="w-3 h-3" />
+                          )}
+                          {speakingMessageIndex === index ? "Stop" : "Read answer"}
+                        </button>
+                        {speakingMessageIndex === index && (
+                          <span className="text-[10px] font-mono text-gray-500">
+                            Speaking with expressive professional pacing
+                          </span>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               );
